@@ -3,6 +3,7 @@ package hbases_test
 import (
 	"context"
 	"fmt"
+	"github.com/xndm-recommend/go-utils/tools/logs"
 	_ "net/http/pprof"
 	"testing"
 
@@ -11,7 +12,6 @@ import (
 	"github.com/xndm-recommend/go-utils/dbs/hbases"
 
 	"github.com/xndm-recommend/go-utils/config"
-	"github.com/xndm-recommend/go-utils/tools/errs"
 )
 
 const (
@@ -22,7 +22,7 @@ func TestGet(t *testing.T) {
 	db := &hbases.HBaseThriftAgent{}
 	c := config.ConfigEngine{}
 	err := c.Load(Config_path)
-	errs.CheckCommonErr(err)
+	logs.CommonErr(err)
 	db.GetDbConnFromConf(&c, "HBase_db2")
 	t.Log("db", db)
 	t.Log("db", db.TableName)
@@ -34,7 +34,7 @@ func TestGetRow(t *testing.T) {
 	db := &hbases.HBaseThriftAgent{}
 	c := config.ConfigEngine{}
 	err := c.Load(Config_path)
-	errs.CheckCommonErr(err)
+	logs.CommonErr(err)
 	db.GetDbConnFromConf(&c, "HBase_db2")
 	t.Log("db", db)
 	t.Log("db", db.TableName)
@@ -46,7 +46,7 @@ func TestGetMultipleRows(t *testing.T) {
 	db := &hbases.HBaseThriftAgent{}
 	c := config.ConfigEngine{}
 	err := c.Load(Config_path)
-	errs.CheckCommonErr(err)
+	logs.CommonErr(err)
 	db.GetDbConnFromConf(&c, "HBase_db2")
 	t.Log("db", db)
 	t.Log("db", db.TableName)
@@ -66,7 +66,7 @@ func TestGetScannerResultsAll(t *testing.T) {
 	db := &hbases.HBaseThriftAgent{}
 	c := config.ConfigEngine{}
 	err := c.Load(Config_path)
-	errs.CheckCommonErr(err)
+	logs.CommonErr(err)
 	db.GetDbConnFromConf(&c, "HBase_db2")
 	t.Log("db", db)
 	t.Log("db", db.TableName)

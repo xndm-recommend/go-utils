@@ -2,9 +2,8 @@ package versions
 
 import (
 	"fmt"
+	"github.com/xndm-recommend/go-utils/tools/logs"
 	"testing"
-
-	"github.com/xndm-recommend/go-utils/tools/errs"
 
 	"github.com/xndm-recommend/go-utils/config"
 )
@@ -16,7 +15,7 @@ const (
 func TestMysqlDbInfo_QueryStruct(t *testing.T) {
 	c := config.ConfigEngine{}
 	err := c.Load(Config_path)
-	errs.CheckCommonErr(err)
+	logs.CommonErr(err)
 	dbinfo := Version{}
 	dbinfo.GeVersionFromConf(&c, "Version")
 	fmt.Println(dbinfo.GetAlgoVersion())

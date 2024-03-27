@@ -2,12 +2,12 @@ package gohbase
 
 import (
 	"fmt"
+	"github.com/xndm-recommend/go-utils/tools/logs"
 	"testing"
 
 	"github.com/tsuna/gohbase/filter"
 	"github.com/tsuna/gohbase/hrpc"
 	"github.com/xndm-recommend/go-utils/config"
-	"github.com/xndm-recommend/go-utils/tools/errs"
 )
 
 const (
@@ -18,7 +18,7 @@ func TestHbaseConnectionFromConfig(t *testing.T) {
 	db := &HBaseDbInfo{}
 	c := config.ConfigEngine{}
 	err := c.Load(Config_path)
-	errs.CheckCommonErr(err)
+	logs.CommonErr(err)
 	db.GetDbConnFromConf(&c, "HBase_db")
 	t.Log(db.Ping())
 	t.Log("db", db)
@@ -32,7 +32,7 @@ func TestHbaseConnectionFromConfig1(t *testing.T) {
 	db := &HBaseDbInfo{}
 	c := config.ConfigEngine{}
 	err := c.Load(Config_path)
-	errs.CheckCommonErr(err)
+	logs.CommonErr(err)
 	db.GetDbConnFromConf(&c, "HBase_db")
 	t.Log(db.Ping())
 	t.Log("db", db)

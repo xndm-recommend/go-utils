@@ -1,9 +1,8 @@
 package converter
 
 import (
+	"github.com/xndm-recommend/go-utils/tools/logs"
 	"strconv"
-
-	"github.com/xndm-recommend/go-utils/tools/errs"
 
 	"github.com/xndm-recommend/go-utils/tools/types/strs"
 )
@@ -17,7 +16,7 @@ func StrToInt(a string, defaultInt int) int {
 	if r, err := strconv.Atoi(a); err == nil {
 		return r
 	} else {
-		errs.CheckCommonErr(err)
+		logs.CommonErr(err)
 		return defaultInt
 	}
 }
@@ -26,7 +25,7 @@ func StrToInt32(a string, defaultInt int32) int32 {
 	if r, err := strconv.ParseInt(a, 10, 32); err == nil {
 		return int32(r)
 	} else {
-		errs.CheckCommonErr(err)
+		logs.CommonErr(err)
 		return defaultInt
 	}
 }
@@ -35,7 +34,7 @@ func StrToInt64(a string, defaultInt int64) int64 {
 	if r, err := strconv.ParseInt(a, 10, 64); err == nil {
 		return r
 	} else {
-		errs.CheckCommonErr(err)
+		logs.CommonErr(err)
 		return defaultInt
 	}
 }
@@ -44,7 +43,7 @@ func StrToFloat32(a string, defaultFloat float32) float32 {
 	if r, err := strconv.ParseFloat(a, 32); err == nil {
 		return float32(r)
 	} else {
-		errs.CheckCommonErr(err)
+		logs.CommonErr(err)
 		return defaultFloat
 	}
 }
@@ -53,7 +52,7 @@ func StrToFloat64(a string, defaultInt float64) float64 {
 	if r, err := strconv.ParseFloat(a, 64); err == nil {
 		return r
 	} else {
-		errs.CheckCommonErr(err)
+		logs.CommonErr(err)
 		return defaultInt
 	}
 }

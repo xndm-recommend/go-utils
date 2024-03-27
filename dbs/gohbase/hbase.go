@@ -3,12 +3,12 @@ package gohbase
 import (
 	"context"
 	"errors"
+	"github.com/xndm-recommend/go-utils/tools/logs"
 	"io"
 
 	"github.com/tsuna/gohbase"
 	"github.com/tsuna/gohbase/hrpc"
 	"github.com/xndm-recommend/go-utils/config"
-	"github.com/xndm-recommend/go-utils/tools/errs"
 )
 
 type HBaseDbInfo struct {
@@ -32,32 +32,32 @@ func (hb *HBaseDbInfo) connectHBase(db *config.HBaseDbData) {
 	hb._client = gohbase.NewClient(db.ZK, gohbase.RpcQueueSize(db.QueueSize), gohbase.CompressionCodec("snappy"))
 }
 
-//通过hb.PutsByRowkeyVersion(table, rowkey, values, hrpc.Timestamp(timestamp))调用，其中timestamp是time.Time类型，options也可以是其他 func(hrpc.Call)的函数
+// 通过hb.PutsByRowkeyVersion(table, rowkey, values, hrpc.Timestamp(timestamp))调用，其中timestamp是time.Time类型，options也可以是其他 func(hrpc.Call)的函数
 func (hb *HBaseDbInfo) PutsByRowkeyVersion(table, rowKey string, values map[string]map[string][]byte, options func(hrpc.Call) error) (err error) {
 	putRequest, err := hrpc.NewPutStr(context.Background(), table, rowKey, values, options)
-	errs.CheckCommonErr(err)
+	logs.CommonErr(err)
 	_, err = hb._client.Put(putRequest)
-	errs.CheckCommonErr(err)
+	logs.CommonErr(err)
 
 	return
 }
 
-//指定表，通过options筛选数据，例如Families函数，或者filter函数
+// 指定表，通过options筛选数据，例如Families函数，或者filter函数
 func (hb *HBaseDbInfo) GetsByOption(table, rowkey string, options ...func(hrpc.Call) error) (*hrpc.Result, error) {
 	getRequest, err := hrpc.NewGetStr(context.Background(), table, rowkey, options...)
 	if nil != err {
-		errs.CheckCommonErr(err)
+		logs.CommonErr(err)
 		return nil, err
 	}
 	res, err := hb._client.Get(getRequest)
 	if nil != err {
-		errs.CheckCommonErr(err)
+		logs.CommonErr(err)
 		return nil, err
 	}
 	return res, err
 }
 
-//指定表，通过options筛选数据，例如Families函数，或者filter函数
+// 指定表，通过options筛选数据，例如Families函数，或者filter函数
 func (hb *HBaseDbInfo) GetsByScanOption(table string, options ...func(hrpc.Call) error) (rsp []*hrpc.Result, err error) {
 	var (
 		scanRequest *hrpc.Scan
@@ -66,7 +66,7 @@ func (hb *HBaseDbInfo) GetsByScanOption(table string, options ...func(hrpc.Call)
 	)
 	scanRequest, err = hrpc.NewScanStr(context.Background(), table, options...)
 	if nil != err {
-		errs.CheckCommonErr(err)
+		logs.CommonErr(err)
 		return nil, err
 	}
 	scanner := hb._client.Scan(scanRequest)
@@ -76,7 +76,7 @@ func (hb *HBaseDbInfo) GetsByScanOption(table string, options ...func(hrpc.Call)
 			break
 		}
 		if nil != err1 {
-			errs.CheckCommonErr(err1)
+			logs.CommonErr(err1)
 			return nil, err1
 		}
 		rsp = append(rsp, res)

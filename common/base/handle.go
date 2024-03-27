@@ -2,10 +2,9 @@ package base
 
 import (
 	"fmt"
+	"github.com/xndm-recommend/go-utils/tools/logs"
 	"net/http"
 	"runtime"
-
-	"github.com/xndm-recommend/go-utils/tools/errs"
 
 	"github.com/gin-gonic/gin"
 )
@@ -37,6 +36,6 @@ func RecoverFunc(c *gin.Context) {
 		c.String(http.StatusInternalServerError, "[]")
 		buf := make([]byte, 4096)
 		n := runtime.Stack(buf, false)
-		errs.CheckErrSendEmail(fmt.Errorf("recovery:%s\nstack:%s", rec, string(buf[:n])))
+		logs.CheckErrSendEmail(fmt.Errorf("recovery:%s\nstack:%s", rec, string(buf[:n])))
 	}
 }

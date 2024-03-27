@@ -9,7 +9,7 @@ import (
 	"github.com/cihub/seelog"
 )
 
-func LoggerSetup(c string) {
+func LoggerSetup(c string) seelog.LoggerInterface {
 	//seelog.RegisterCustomFormatter("QuoteMsg", createQuoteMsgFormatter)
 	//seelog.RegisterCustomFormatter("QuoteMsg",createQuoteMsgFormatter)
 	logger, err := seelog.LoggerFromConfigAsFile(c)
@@ -17,7 +17,8 @@ func LoggerSetup(c string) {
 		_, file, line, _ := runtime.Caller(1)
 		_ = seelog.Critical("Important error:", file, ":", line, err)
 		panic(err)
-		return
+		return nil
 	}
 	_ = seelog.ReplaceLogger(logger)
+	return logger
 }

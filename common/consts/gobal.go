@@ -1,13 +1,6 @@
 package consts
 
 const (
-	// 当前支持平台
-	PLATFORM_SAMH = "samh"
-	PLATFORM_MKZ  = "mkz"
-	PLATFORM_KMH  = "kmh"
-)
-
-const (
 	// 运行环境
 	RUN_MODE_DEV  = "dev"
 	RUN_MODE_PROD = "prod"

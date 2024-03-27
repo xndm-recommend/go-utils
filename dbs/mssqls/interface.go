@@ -5,9 +5,8 @@ package mssqls
 */
 import (
 	"fmt"
+	"github.com/xndm-recommend/go-utils/tools/logs"
 	"time"
-
-	"github.com/xndm-recommend/go-utils/tools/errs"
 
 	"github.com/jmoiron/sqlx"
 
@@ -38,12 +37,12 @@ func getMssqlLoginStr(section *config.MssqlDbData) string {
 
 func (this *MssqlDbInfo) createMssqlConns(login *config.MssqlDbData) {
 	db, err := sqlx.Open("mssql", getMssqlLoginStr(login))
-	errs.CheckFatalErr(err)
+	logs.FatalErr(err)
 	db.SetConnMaxLifetime(time.Duration(login.Time_out) * time.Second)
 	db.SetMaxOpenConns(login.Max_conns)
 	db.SetMaxIdleConns(login.Max_conns)
 	err = db.Ping()
-	errs.CheckFatalErr(err)
+	logs.FatalErr(err)
 	this.SqlDataDb = db
 	this.TableName = login.Table_name
 	this.MaxConns = login.Max_conns

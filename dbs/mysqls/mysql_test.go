@@ -1,9 +1,8 @@
 package mysqls_test
 
 import (
+	"github.com/xndm-recommend/go-utils/tools/logs"
 	"testing"
-
-	"github.com/xndm-recommend/go-utils/tools/errs"
 
 	"github.com/xndm-recommend/go-utils/config"
 	. "github.com/xndm-recommend/go-utils/dbs/mysqls"
@@ -16,7 +15,7 @@ const (
 func TestMysqlDbInfo_QueryIdList(b *testing.T) {
 	c := config.ConfigEngine{}
 	err := c.Load(Config_path)
-	errs.CheckCommonErr(err)
+	logs.CommonErr(err)
 	db := MysqlDbInfo{}
 	db.GetDbConnFromConf(&c, "Comic_data")
 	ids, _ := db.SelectStrList("select item_id from behavior limit 1")
@@ -26,7 +25,7 @@ func TestMysqlDbInfo_QueryIdList(b *testing.T) {
 func TestMysqlDbInfo_QueryStruct(t *testing.T) {
 	c := config.ConfigEngine{}
 	err := c.Load(Config_path)
-	errs.CheckCommonErr(err)
+	logs.CommonErr(err)
 	dbinfo := MysqlDbInfo{}
 	dbinfo.GetDbConnFromConf(&c, "Comic_data")
 

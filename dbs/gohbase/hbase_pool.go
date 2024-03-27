@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/xndm-recommend/go-utils/tools/logs"
 	"os"
 	"time"
 
@@ -12,7 +13,6 @@ import (
 	"github.com/apache/thrift/lib/go/thrift"
 	"github.com/cihub/seelog"
 	"github.com/xndm-recommend/go-utils/dbs/hbases/gen-go/hbase"
-	"github.com/xndm-recommend/go-utils/tools/errs"
 )
 
 type MyHbaseClient struct {
@@ -60,7 +60,7 @@ func CreateClient() (interface{}, error) {
 		fmt.Fprintln(os.Stderr, "error resolving address:", err)
 		os.Exit(1)
 	}
-	errs.CheckCommonErr(err)
+	logs.CommonErr(err)
 	if err != nil {
 		_ = seelog.Error("hbase连接异常")
 		_ = seelog.Error(err)
